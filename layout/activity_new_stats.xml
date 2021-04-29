@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".NewStatsActivity">
+
+    <TextView
+        android:id="@+id/progressTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/getDataBtn"
+        tools:layout_editor_absoluteX="177dp"
+        tools:text="Progress" />
+
+    <Button
+        android:id="@+id/getDataBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Get Data"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+    <View
+        android:id="@+id/divider_1"
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="16dp"
+        android:background="#ccc"
+        app:layout_constraintTop_toTopOf="@+id/totalTitleTextView"
+        app:layout_constraintEnd_toStartOf="@+id/totalTitleTextView"
+        app:layout_constraintBottom_toBottomOf="@+id/totalTitleTextView"
+        android:layout_marginRight="16dp" />
+    <View
+        android:id="@+id/divider_2"
+        android:layout_width="1dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:background="#ccc"
+        app:layout_constraintBottom_toBottomOf="@+id/totalTitleTextView"
+        app:layout_constraintStart_toEndOf= "@+id/totalTitleTextView"
+        app:layout_constraintTop_toTopOf="@+id/totalTitleTextView"
+        android:layout_marginLeft="16dp" />
+
+
+    <ListView
+        android:id="@+id/myListView"
+        android:layout_width="346dp"
+        android:layout_height="428dp"
+        app:layout_constraintBottom_toTopOf="@+id/progressTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/maskTitleTextView"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="# Of Violators"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/divider_1"
+        app:layout_constraintTop_toTopOf="@+id/totalTitleTextView" />
+
+    <TextView
+        android:id="@+id/totalTitleTextView"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Total People"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/myListView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.161" />
+
+    <TextView
+        android:id="@+id/PercentageTitleTextView"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="% of Violators"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@+id/divider_2"
+        app:layout_constraintTop_toTopOf="@+id/totalTitleTextView" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

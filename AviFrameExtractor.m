@@ -2,22 +2,22 @@ clc;
 clear;
 close all;
 
-addpath('C:\Users\David\Documents\MATLAB\403');
-cd('C:\Users\David\Documents\MATLAB\403');
-obj = VideoReader('DemoTest3.avi'); % reads the video file
+addpath('/Users/donnyhuang322/Desktop/Engineering/ECEN_and_CSCE/Senior Design/FullSystem');
+cd('/Users/donnyhuang322/Desktop/Engineering/ECEN_and_CSCE/Senior Design/FullSystem');
+obj = VideoReader('3manTestWhitemask.avi'); % reads the video file
 vid = read(obj);
 frames = obj.NumFrames; % gets the number of frames in the file
 F = cell(1,frames); % cells with frames matrices
 
-if ~exist('C:\Users\David\Documents\MATLAB\403\footageframes', 'dir')
-       mkdir('C:\Users\David\Documents\MATLAB\403\footageframes')
+if ~exist('/Users/donnyhuang322/Desktop/Engineering/ECEN_and_CSCE/Senior Design/FullSystem/footageframes', 'dir')
+       mkdir('/Users/donnyhuang322/Desktop/Engineering/ECEN_and_CSCE/Senior Design/FullSystem/footageframes')
 else
-    rmdir('C:\Users\David\Documents\MATLAB\403\footageframes', 's'); % make sure any old images dont transfer over
-    mkdir('C:\Users\David\Documents\MATLAB\403\footageframes');
+    rmdir('/Users/donnyhuang322/Desktop/Engineering/ECEN_and_CSCE/Senior Design/FullSystem/footageframes', 's'); % make sure any old images dont transfer over
+    mkdir('/Users/donnyhuang322/Desktop/Engineering/ECEN_and_CSCE/Senior Design/FullSystem/footageframes');
 end
-cd('C:\Users\David\Documents\MATLAB\403\footageframes');
+cd('/Users/donnyhuang322/Desktop/Engineering/ECEN_and_CSCE/Senior Design/FullSystem/footageframes');
 
-for f = 1:5:frames % this loop extracts all of the frames in the video
+for f = 1:1:frames % this loop extracts all of the frames in the video
     F{1,f} = vid(:,:,:,f);    
     newfilename = strcat('Frame', num2str(f), '.jpg');
     imwrite(F{1,f},newfilename);

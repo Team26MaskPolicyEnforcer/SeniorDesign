@@ -32,14 +32,7 @@ public class RecordedActivity extends AppCompatActivity implements MediaPlayer.O
         videoListView = (ListView)findViewById(R.id.videoListView);
         vw.setMediaController(new MediaController(this));
         vw.setOnCompletionListener(this);
-
-        videoList.add(R.raw.drop);
-        videoList.add(R.raw.threads);
-        videoList.add(R.raw.f);
-        videoList.add(R.raw.scheduling);
-        videoList.add(R.raw.finalreview);
-        videoList.add(R.raw.ecen424lec0);
-        videoList.add(R.raw.ecen424lec1);
+        videoList.add(R.raw.output_video);
         adapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1,videoList);
         videoListView.setAdapter(adapter);
         videoListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

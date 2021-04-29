@@ -56,79 +56,79 @@ public class NewStatsActivity extends AppCompatActivity {
                 GetData retrieveData = new GetData();
                 retrieveData.execute("");
             }
-    });
+        });
     }
-        private class GetData extends AsyncTask<String, String, String> {
-            String msg = "";
-            static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
-            static final String DB_URL = "jdbc:mysql://100.64.2.155:3306/data";
-            @Override
-            protected void onPreExecute(){
-                progressTextView.setText("Connecting to database...");
-            }
-            @Override
-            protected String doInBackground(String... strings) {
+    private class GetData extends AsyncTask<String, String, String> {
+        String msg = "";
+        static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+        static final String DB_URL = "jdbc:mysql://100.64.13.84:3306/data";
+        @Override
+        protected void onPreExecute(){
+            progressTextView.setText("Connecting to database...");
+        }
+        @Override
+        protected String doInBackground(String... strings) {
 
-                Connection conn = null;
-                Statement stmt = null;
+            Connection conn = null;
+            Statement stmt = null;
 
+            try{
+                Class.forName(JDBC_DRIVER);
+                conn = DriverManager.getConnection(DB_URL, DBStrings.USERNAME, DBStrings.PASSWORD);
+                stmt = conn.createStatement();
+                String sql = "SELECT * FROM Stats";
+                ResultSet rs = stmt.executeQuery(sql);
+                while(rs.next()){
+                    int masks = rs.getInt("Masks");
+                    int total = rs.getInt("Total");
+                    float percentage = (float) ((float) (1-(masks)/(float)(total)))*100;
+                    if (percentage > 100 || percentage < 0 || masks < 0 || total < 0 || (masks > total)){
+                        msg = "Error found in inputs.";
+                        System.exit(1);
+                    }
+                    int violators = total-masks;
+                    maskList.add(violators);
+                    totalPeopleList.add(total);
+                    percentageList.add(percentage);
+                }
+                msg = "Process complete.";
+                rs.close();
+                stmt.close();
+                conn.close();
+            } catch(SQLException connError){
+                msg = "An exception was thrown for JDBC.";
+                connError.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                msg = "A class not found exception was thrown";
+                e.printStackTrace();
+            }finally {
                 try{
-                    Class.forName(JDBC_DRIVER);
-                    conn = DriverManager.getConnection(DB_URL, DBStrings.USERNAME, DBStrings.PASSWORD);
-                    stmt = conn.createStatement();
-                    String sql = "SELECT * FROM Stats";
-                    ResultSet rs = stmt.executeQuery(sql);
-                    while(rs.next()){
-                        int masks = rs.getInt("Masks");
-                        int total = rs.getInt("Total");
-                        float percentage = (float) ((float) (masks)/(float)(total));
-                        if (percentage > 1 || percentage < 0 || masks < 0 || total < 0 || (masks > total)){
-                            msg = "Error found in inputs.";
-                            System.exit(1);
-                        }
-                        maskList.add(masks);
-                        totalPeopleList.add(total);
-                        percentageList.add(percentage);
-
+                    if (stmt != null){
+                        stmt.close();
                     }
-                    msg = "Process complete.";
-                    rs.close();
-                    stmt.close();
-                    conn.close();
-                } catch(SQLException connError){
-                    msg = "An exception was thrown for JDBC.";
-                    connError.printStackTrace();
-                } catch (ClassNotFoundException e) {
-                    msg = "A class not found exception was thrown";
+                } catch (SQLException e) {
                     e.printStackTrace();
-                }finally {
-                    try{
-                        if (stmt != null){
-                            stmt.close();
-                        }
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-                    try{
-                        if (conn != null){
-                            conn.close();
-                        }
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
                 }
-
-                return null;
+                try{
+                    if (conn != null){
+                        conn.close();
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
-            @Override
-            protected void onPostExecute(String msg){
-                progressTextView.setText((this.msg));
-                if (maskList.size()>0 && totalPeopleList.size()>0 && percentageList.size() > 0){
-                    itemAdapter = new ItemAdapter(thisContext, maskList, totalPeopleList, percentageList);
-                    itemAdapter.notifyDataSetChanged();
-                    myListView.setAdapter(itemAdapter);
-                    myListView.invalidateViews();
-                }
+
+            return null;
+        }
+        @Override
+        protected void onPostExecute(String msg){
+            progressTextView.setText((this.msg));
+            if (maskList.size()>0 && totalPeopleList.size()>0 && percentageList.size() > 0){
+                itemAdapter = new ItemAdapter(thisContext, maskList, totalPeopleList, percentageList);
+                itemAdapter.notifyDataSetChanged();
+                myListView.setAdapter(itemAdapter);
+                myListView.invalidateViews();
             }
         }
     }
+}
